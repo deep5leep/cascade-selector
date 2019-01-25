@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+.cascade-selector{
+	position: relative;
+	border: none;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	/*↓↓↓↓设置文本内容为不可编辑选取↓↓↓↓*/
+	moz-user-select: -moz-none;
+	-moz-user-select: none;
+	-o-user-select:none;
+	-khtml-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+
+.cascade-selector .cascade-panel{
+	position: absolute;
+	top: 0px;
+	display:none;
+	z-index: 99;
+}
+
+.cascade-selector .cascade-selectitem{
+	width: 100%;
+	transition: 0.5s;
+	transition-property: color;
+}
+.cascade-selector .cascade-selectitem .selectitem-text{
+	margin-left: 20px;
+	float: left;
+}
+.cascade-selector .cascade-selectitem .selectitem-flag{
+	margin-right: 20px;
+	float: right;
+}
+.cascade-selector .cascade-selectitem:hover{
+	cursor: default;
+}
+
+/*模板panel*/
+.cascade-panel .inner{
+	position: relative;
+	margin: 10px 20px 10px 20px;
+	overflow: hidden;
+	animation: move 0.3s;
+}
+@keyframes move{
+	0%   {left: -10px; opacity: 0;}
+	40%  {left: -5px; opacity: 0.2;}
+	80%  {left: -2px; opacity: 0.6;}
+	100% {left: 0; opacity: 1;}
+}
+.inner .title{
+	width: auto;
+	height: 20px;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 20px;
+}
+.inner .title:hover{cursor: default;}
+
+.item-block {
+	width: 100%;
+	height: auto;
+	min-height: 30px;
+	margin: 20px 5px 10px 5px;
+}
+
+.item-block .item{
+	display: inline-block;
+	width: 160px;
+	height: 20px;
+	margin: 6px 1px 6px 1px;
+	color: #666666;
+}
+
+.a-item{text-decoration: none; color: #666666;}
+.a-item:hover{color: #01AAED; cursor: pointer;}
+
+/*右箭头图标*/
+@font-face{
+	font-family:icon;
+	src:url(./font/iconfont.eot?v=240);
+	src:url(./font/iconfont.eot?v=240#iefix) format('embedded-opentype'),url(./font/iconfont.svg?v=240#iconfont) format('svg'),url(./font/iconfont.woff?v=240) format('woff'),url(./font/iconfont.ttf?v=240) format('truetype')
+}
+.icon{
+	font-family:icon !important;
+	font-size:16px;font-style:normal;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale
+}
+.flag-icon:before{content:"\e602"}
