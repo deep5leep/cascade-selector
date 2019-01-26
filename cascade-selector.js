@@ -2,7 +2,7 @@
  * 	cascade-selector：hover式触发级联选择器
  * 	- 垂直式布局，基于jquery-3.3.1.min.js，依赖layui的ayui-icon-right图标，现已打包
  *  - 支持嵌套，每个cascade-selector的下一级都可绑定拓展函数，灵活性高。封装模板cascade-panel，集成响应事件
- *  - 参数化样式，轻度支持自定义修改样式，非常轻量级(没引入图标之前...)
+ *  - 参数化样式，轻度支持自定义修改样式，非常轻量级
  *  - css样式层次
  *  	<cascade-selector>
  *  	<cascade-panel>嵌套处</cascade-panel>
@@ -54,6 +54,33 @@
  *  - 2019-01-25
  */
 
+/*	参数全局配置
+ * 	可以通过静态函数修改全局默认，这样可以定义自己喜欢的风格，而不用每个selector都去赋参
+ * */
+CascadeSelector.themeColor = "#01AAED";
+CascadeSelector.fontColor = "black";
+CascadeSelector.backgroundColor = "white";
+CascadeSelector.borderColor = "#dddddd";
+CascadeSelector.selectorWidth = "200px";
+CascadeSelector.selectorHeight = "auto";
+CascadeSelector.selectitemHeight = "35px";
+CascadeSelector.panelWidth = "700px";
+CascadeSelector.panelHeight = "default";
+CascadeSelector.flagColor = "#a0a0a0";
+CascadeSelector.fontSize = "15px";
+CascadeSelector.facede = "default";
+CascadeSelector.func = null;
+/*
+ * 修改全局配置函数：CascadeSelector.config(data)
+ * 		-参数：json对象，键值对形式覆盖默认参数
+ */
+CascadeSelector.config = function(data) {
+	//遍历所有参数
+	for(var conf in data) {//conf为key-value中的key，类型为string
+		eval("CascadeSelector."+conf+"=\""+data[conf]+"\"");//通过eval函数执行js，可实现通过string获得变量名
+	}
+}
+
 /*	主类：CascadeSelector
 	参数：
 		- conf：为一个json对象，各种参数信息
@@ -62,19 +89,19 @@
 */
 function CascadeSelector(conf, data, parent) {
 	//私有属性，读取参数配置，覆盖缺省值
-	var themeColor = conf['themeColor'] || "#01AAED";
-	var fontColor = conf['fontColor'] || "black";
-	var backgroundColor = conf['backgroundColor'] || "white";
-	var borderColor = conf['borderColor'] || "#dddddd";
-	var selectorWidth = conf['selectorWidth'] || "200px";
-	var selectorHeight = conf['selectorHeight'] || "auto";
-	var selectitemHeight = conf['selectitemHeight'] || "35px";
-	var panelWidth = conf['panelWidth'] || "700px";
-	var panelHeight = conf['panelHeight'] || "default";//默认表示跟随selector的高度，auto表示自动高度，auto|default
-	var flagColor = conf['flagColor'] || "#a0a0a0";
-	var fontSize = conf['fontSize'] || "15px";
-	var facede = conf['facede'] || "default";
-	var func = conf['func'] || null;//这个参数必须指定，否则应该把isTail设为true
+	var themeColor = conf['themeColor'] || CascadeSelector.themeColor;
+	var fontColor = conf['fontColor'] || CascadeSelector.fontColor;
+	var backgroundColor = conf['backgroundColor'] || CascadeSelector.backgroundColor;
+	var borderColor = conf['borderColor'] || CascadeSelector.borderColor;
+	var selectorWidth = conf['selectorWidth'] || CascadeSelector.selectorWidth;
+	var selectorHeight = conf['selectorHeight'] || CascadeSelector.selectorHeight;
+	var selectitemHeight = conf['selectitemHeight'] || CascadeSelector.selectitemHeight;
+	var panelWidth = conf['panelWidth'] || CascadeSelector.panelWidth;
+	var panelHeight = conf['panelHeight'] || CascadeSelector.panelHeight;//默认表示跟随selector的高度，auto表示自动高度，auto|default
+	var flagColor = conf['flagColor'] || CascadeSelector.flagColor;
+	var fontSize = conf['fontSize'] || CascadeSelector.fontSize;
+	var facede = conf['facede'] || CascadeSelector.facede;
+	var func = conf['func'] || CascadeSelector.func;//这个参数必须指定，否则应该把isTail设为true
 	
 	//公有属性
 	this.dom;//绑定的dom对象
@@ -130,8 +157,8 @@ function CascadeSelector(conf, data, parent) {
 		
 		//css样式设置
 		$(selector).css({"background": backgroundColor, "width": selectorWidth, "height": selectorHgt});
-		$(selectitems).css({"height": selectitemHeight, "line-height": selectitemHeight, "color": fontColor});
-		$(texts).css("font-size", fontSize);
+		$(selectitems).css({"height": selectitemHeight, "line-height": selectitemHeight});
+		$(texts).css({"font-size": fontSize, "color": fontColor});
 		$(flags).css("color", flagColor);
 		$(panel).css({"background": backgroundColor, "width": selectorWidth, "height": panelHeight, "border-left": "1px solid "+borderColor, "left": panelLeft});
 		if(facede == "panel") {//如果panel样式为panel，则改变宽高等
