@@ -164,7 +164,7 @@ function CascadeSelector(conf, data, parent) {
 		$(flags).css("color", flagColor);
 		$(panel).css({"background": backgroundColor, "width": selectorWidth, "height": panelHeight, "left": panelLeft});
 		if(facede == "panel") {//如果panel样式为panel，则改变宽高等
-			$(panel).css({"background": backgroundColor, "width": panelWidth, "height": selectorHeight, "border": "none", "border": "1px solid "+borderColor});
+			$(panel).css({"background": backgroundColor, "width": panelWidth, "height": (parseInt(selectorHeight.substr(0, selectorHeight.length-2))-2)+"px", "border": "1px solid "+borderColor});
 		}
 		if(hasBorder == false) {//selector是否有边框
 			$(panel).css({"border-left": "1px solid "+borderColor});//没有的话panel默认加左边框区分
