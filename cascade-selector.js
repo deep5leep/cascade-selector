@@ -65,9 +65,10 @@ CascadeSelector.selectorWidth = "200px";
 CascadeSelector.selectorHeight = "auto";
 CascadeSelector.selectitemHeight = "35px";
 CascadeSelector.panelWidth = "700px";
-CascadeSelector.panelHeight = "default";
+CascadeSelector.panelHeight = "default";//default|auto
 CascadeSelector.flagColor = "#a0a0a0";
 CascadeSelector.fontSize = "15px";
+CascadeSelector.hasBorder = false;
 CascadeSelector.facede = "default";
 CascadeSelector.func = null;
 /*
@@ -100,6 +101,7 @@ function CascadeSelector(conf, data, parent) {
 	var panelHeight = conf['panelHeight'] || CascadeSelector.panelHeight;//默认表示跟随selector的高度，auto表示自动高度，auto|default
 	var flagColor = conf['flagColor'] || CascadeSelector.flagColor;
 	var fontSize = conf['fontSize'] || CascadeSelector.fontSize;
+	var hasBorder = conf['hasBorder'] || CascadeSelector.hasBorder;
 	var facede = conf['facede'] || CascadeSelector.facede;
 	var func = conf['func'] || CascadeSelector.func;//这个参数必须指定，否则应该把isTail设为true
 	
@@ -157,12 +159,19 @@ function CascadeSelector(conf, data, parent) {
 		
 		//css样式设置
 		$(selector).css({"background": backgroundColor, "width": selectorWidth, "height": selectorHgt});
-		$(selectitems).css({"height": selectitemHeight, "line-height": selectitemHeight});
+		$(selectitems).css({"height": selectitemHeight, "line-height": selectitemHeight, "border-top": "1px solid "+backgroundColor, "border-bottom": "1px solid "+backgroundColor});
 		$(texts).css({"font-size": fontSize, "color": fontColor});
 		$(flags).css("color", flagColor);
-		$(panel).css({"background": backgroundColor, "width": selectorWidth, "height": panelHeight, "border-left": "1px solid "+borderColor, "left": panelLeft});
+		$(panel).css({"background": backgroundColor, "width": selectorWidth, "height": panelHeight, "left": panelLeft});
 		if(facede == "panel") {//如果panel样式为panel，则改变宽高等
 			$(panel).css({"background": backgroundColor, "width": panelWidth, "height": selectorHeight, "border": "none", "border": "1px solid "+borderColor});
+		}
+		if(hasBorder == false) {//selector是否有边框
+			$(panel).css({"border-left": "1px solid "+borderColor});//没有的话panel默认加左边框区分
+		} else {
+			//有边框的化selector宽高各减少2，此时panel因无边框，则left需减少1，因selector有边框，顶部也需要减少1
+			$(selector).css({"width": $(selector).width()-2+"px", "height": $(selector).height()-2+"px", "border": "1px solid "+borderColor});
+			$(panel).css({"left": $(selector).width()+"px", "top": "-1px"});
 		}
 		
 		//事件相关参数
@@ -174,7 +183,7 @@ function CascadeSelector(conf, data, parent) {
 			//清除上次的selector的hover效果
 			if(lastSelector != null && lastSelector != this) {//不为空并且不为自己，所有要清除上次的hover效果
 				$(lastSelector).children('.selectitem-flag').show();
-				$(lastSelector).css({"border": "none", "color": fontColor});
+				$(lastSelector).css({"border-top": "1px solid "+backgroundColor, "border-bottom": "1px solid "+backgroundColor, "color": fontColor});
 				isInstance = true;//这里说明有选项更换的情况，必然引起新实例
 				$(panel).empty();//新实例为true，应删除panel所有子元素
 			}
@@ -198,7 +207,7 @@ function CascadeSelector(conf, data, parent) {
 				if(isLeaveSelector && isLeavePanel) {//鼠标是否离开了selector和panel
 					//selector变化
 					$(This).children('.selectitem-flag').show();
-					$(This).css({"border": "none", "color": fontColor});
+					$(This).css({"border-top": "1px solid "+backgroundColor, "border-bottom": "1px solid "+backgroundColor, "color": fontColor});
 					//隐藏二级选项
 					$(This).parent().children('.cascade-panel').hide();
 					isInstance = true;//鼠标已移动至无关区域，标志下次为新实例
@@ -217,7 +226,7 @@ function CascadeSelector(conf, data, parent) {
 				if(isLeaveSelector && isLeavePanel) {
 					//selector变化
 					$(lastSelector).children('.selectitem-flag').show();
-					$(lastSelector).css({"border": "none", "color": fontColor});
+					$(lastSelector).css({"border-top": "1px solid "+backgroundColor, "border-bottom": "1px solid "+backgroundColor, "color": fontColor});
 					//隐藏二级选项
 					$(lastSelector).parent().children('.cascade-panel').hide();
 					isInstance = true;//鼠标已移动至无关区域，标志下次为新实例
@@ -263,8 +272,8 @@ CascadeSelector.createTempPanel = function(conf, data) {
 	//读取各种参数
 	var title_name = conf['title'];//标题文本
 	var func = conf['func'];//超链接按钮响应函数
-	var width = conf['width'] || "700px";
-	var height = conf['width'] || "400px";
+	var width = conf['width'] || "700px";//700px
+	var height = conf['width'] || "400px";//400px
 	width = (parseInt(width.substr(0, width.length-2))-1-40)+"px";
 	height = (parseInt(height.substr(0, height.length-2))-2-20)+"px";
 	
