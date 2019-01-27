@@ -160,7 +160,7 @@ function CascadeSelector(conf, data, parent) {
 		//css样式设置
 		$(selector).css({"background": backgroundColor, "width": selectorWidth, "height": selectorHgt});
 		$(selectitems).css({"height": selectitemHeight, "line-height": selectitemHeight, "border-top": "1px solid "+backgroundColor, "border-bottom": "1px solid "+backgroundColor});
-		$(texts).css({"font-size": fontSize, "color": fontColor});
+		$(texts).css({"font-size": fontSize});
 		$(flags).css("color", flagColor);
 		$(panel).css({"background": backgroundColor, "width": selectorWidth, "height": panelHeight, "left": panelLeft});
 		if(facede == "panel") {//如果panel样式为panel，则改变宽高等
