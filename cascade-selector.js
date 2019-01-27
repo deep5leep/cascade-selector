@@ -47,7 +47,7 @@
  *  	公有属性：this.dom;//绑定的dom对象
  *  	构造方法：new CascadeSelector(conf, data, parent)
  *  	私有方法：creatSelector(list)，init(obj)
- *  	静态方法：createTempPanel(conf, data)
+ *  	静态方法：CascadeSelector.config(data)，createTempPanel(conf, data)
  *  
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *	- created by lr
