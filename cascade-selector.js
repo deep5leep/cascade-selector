@@ -101,7 +101,8 @@ function CascadeSelector(conf, data, parent) {
 	var panelHeight = conf['panelHeight'] || CascadeSelector.panelHeight;//默认表示跟随selector的高度，auto表示自动高度，auto|default
 	var flagColor = conf['flagColor'] || CascadeSelector.flagColor;
 	var fontSize = conf['fontSize'] || CascadeSelector.fontSize;
-	var hasBorder = conf['hasBorder'] || CascadeSelector.hasBorder;
+	//布尔值取参特殊
+	var hasBorder = (conf['hasBorder'] != null) ? conf['hasBorder']: CascadeSelector.hasBorder;
 	var facede = conf['facede'] || CascadeSelector.facede;
 	var func = conf['func'] || CascadeSelector.func;//这个参数必须指定，否则应该把isTail设为true
 	
