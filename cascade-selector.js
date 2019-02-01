@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 	cascade-selector：hover式触发级联选择器
- * 	- 垂直式布局，基于jquery-3.3.1.min.js，依赖layui的ayui-icon-right图标，现已打包
+ * 	- 垂直式布局，基于jquery-3.3.1.min.js
  *  - 支持嵌套，每个cascade-selector的下一级都可绑定拓展函数，灵活性高。封装模板cascade-panel，集成响应事件
  *  - 参数化样式，轻度支持自定义修改样式，非常轻量级
  *  - css样式层次
@@ -133,7 +133,7 @@ function CascadeSelector(conf, data, parent) {
 			$(selectitem).addClass("cascade-selectitem");
 			$(selectitem).attr("id", item['id']);
 			$(text).addClass("selectitem-text");
-			$(flag).addClass("selectitem-flag icon flag-icon");
+			$(flag).addClass("selectitem-flag myicon flag-icon");
 			$(text).text(item['text']);
 			//设置父子关系
 			$(selectitem).append(text);
@@ -178,7 +178,7 @@ function CascadeSelector(conf, data, parent) {
 		//事件相关参数
 		var isLeaveSelector = true;
 		var isLeavePanel = true;
-		var lastSelector = null;//最后一个被选种的selector
+		var lastSelector = null;//最后一个被选种的selectitem
 		var isInstance = true;//是否为新实例，为true则调用拓展函数cascade_getready(panel)，注意，此为模拟的，并不是真的创建实例
 		$(selectitems).hover(function() {//鼠标移进元素的方法
 			//清除上次的selector的hover效果
